@@ -76,8 +76,18 @@ WSGI_APPLICATION = 'elongo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': False,
+        'NAME': 'mongoDB',
+        'USER': 'db_admin',
+        'PASSWORD': 'fof2MFnVitce7FDx',
+        'HOST': 'mongodb+srv://db_admin:fof2MFnVitce7FDx@elongo-bd-adlff.mongodb.net',
+        'PORT': 27017,
+        'SUPPORT_TRANSACTIONS': True,
+        'TEST': {
+            'NAME': 'testDB',
+        }
+
     }
 }
 
