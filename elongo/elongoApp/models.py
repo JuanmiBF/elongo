@@ -1,13 +1,10 @@
 from django.db import models
-from djongo import models as m
-import uuid
+
 
 # Create your models here.
 
 
 class ElectricData(models.Model):
-	# _id = m.ObjectIdField()
-	# _id = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
 	year = models.IntegerField(blank=False, null=False)
 	coal = models.BigIntegerField(blank=False, null=False, default=0)
 	natural_gas = models.BigIntegerField(blank=False, null=False, default=0)
