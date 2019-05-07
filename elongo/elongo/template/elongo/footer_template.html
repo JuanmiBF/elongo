@@ -1,0 +1,21 @@
+<footer class="page-footer font-small blue fixed-bottom bg-primary">
+    <div class="footer-copyright py-3" id="time" style="color: #fff; padding-left: 1%; position: absolute"></div>
+    <div class="footer-copyright text-center py-3" style="color: #fff;">&copy;
+        <script>document.write(new Date().getFullYear())</script>
+        Copyright: <a style="text-decoration: none; color: #fff" href="/elongo/">Elongo</a>
+    </div>
+</footer>
+<script>
+    function updateClock() {
+        let now = new Date(), months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+                'September', 'October', 'November', 'December'],
+            time = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' + (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds()),
+            date = [now.getDate(), months[now.getMonth()], now.getFullYear()].join(' ');
+
+        document.getElementById('time').innerHTML = [date, time].join(', ');
+
+        setTimeout(updateClock, 1000);
+    }
+
+    updateClock();
+</script>
