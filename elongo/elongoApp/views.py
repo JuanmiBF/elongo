@@ -10,6 +10,9 @@ import datetime
 
 
 def index(request):
+
+    ed = ElectricData.objects.all()
+
     x = [datetime.datetime(year=2013, month=10, day=4),
          datetime.datetime(year=2013, month=11, day=5),
          datetime.datetime(year=2013, month=12, day=6)]
@@ -26,7 +29,7 @@ def index(request):
     div = opy.plot(fig, auto_open=False, output_type='div')
     # py.iplot(fig)
 
-    return render(request, 'elongoApp/test.html', {'graph': div})
+    return render(request, 'elongoApp/index.html', {'graph': div})
 
 
 def to_unix_time(dt):
