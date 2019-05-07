@@ -44,4 +44,4 @@ def populate():
 
 
 delete_database_rows()
-# populate()
+populate()

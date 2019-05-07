@@ -22,4 +22,4 @@ class ElectricData(models.Model):
 	total = models.BigIntegerField(blank=False, null=False, default=0)
 
 	def __str__(self):
-		return self.year
+		return str(self.year)

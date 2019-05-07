@@ -3,6 +3,12 @@
 <h1>Welcome to ComunioAdvisor!</h1>
 
 
+{% if graphComp %}
+<div style="width:600px;height:500px">
+{{ graphComp|safe }}
+</div>
+{% endif %}
+
 {% if graph %}
 <div style="width:600px;height:500px">
 {{ graph|safe }}

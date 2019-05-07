@@ -11,25 +11,84 @@ import datetime
 
 def index(request):
 
-    ed = ElectricData.objects.all()
+    electric_data = ElectricData.objects.all().order_by('year')
 
-    x = [datetime.datetime(year=2013, month=10, day=4),
-         datetime.datetime(year=2013, month=11, day=5),
-         datetime.datetime(year=2013, month=12, day=6)]
-    data = [go.Scatter(
+    x = [datetime.datetime(year=ed.year, month=1, day=1) for ed in electric_data]
+    coal_y = [ed.coal for ed in electric_data]
+    petroleum_y = [ed.petroleum for ed in electric_data]
+
+    coal = go.Scatter(
         x=x,
-        y=[1, 3, 6])]
+        y=coal_y,
+        name="Coal",
+        line=dict(color='#17BECF'),
+        opacity=0.8)
 
-    layout = go.Layout(xaxis=dict(
-        range=[to_unix_time(datetime.datetime(2013, 10, 17)),
-               to_unix_time(datetime.datetime(2013, 11, 20))]
-    ))
+    petroleum = go.Scatter(
+        x=x,
+        y=petroleum_y,
+        name="Petroleum",
+        line=dict(color='#7F7F7F'),
+        opacity=0.8)
 
-    fig = go.Figure(data=data, layout=layout)
+    data = [coal, petroleum]
+
+    layoutComp = dict(
+        title='Comparison coal/petroleum',
+        xaxis=dict(
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=1,
+                         label='1y',
+                         step='year',
+                         stepmode='backward'),
+                    dict(count=5,
+                         label='5y',
+                         step='year',
+                         stepmode='backward'),
+                    dict(step='all')
+                ])
+            ),
+            rangeslider=dict(
+                visible=True
+            ),
+            type='date'
+        )
+    )
+
+
+    figComp = dict(data=data, layout=layoutComp)
+    divComp = opy.plot(figComp, auto_open=False, output_type='div')
+
+
+    # This is for not comparing grapth
+    layout = dict(
+        title='Coal',
+        xaxis=dict(
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=1,
+                         label='1y',
+                         step='year',
+                         stepmode='backward'),
+                    dict(count=5,
+                         label='5y',
+                         step='year',
+                         stepmode='backward'),
+                    dict(step='all')
+                ])
+            ),
+            rangeslider=dict(
+                visible=True
+            ),
+            type='date'
+        )
+    )
+    fig = dict(data=[coal], layout=layout)
     div = opy.plot(fig, auto_open=False, output_type='div')
     # py.iplot(fig)
 
-    return render(request, 'elongoApp/index.html', {'graph': div})
+    return render(request, 'elongoApp/index.html', {'graphComp': divComp, 'graph': div})
 
 
 def to_unix_time(dt):
