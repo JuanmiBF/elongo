@@ -1,0 +1,26 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+<h1>{{title}}</h1>
+<table class="table">
+<thead class="thead-dark">
+<tr>
+    <th scope="col">Name</th>
+    <th scope="col">Population</th>
+</tr>
+</thead>
+<tbody>
+{% for city in list%}
+    <tr>
+    <td scope="row">{{ city.name }}</td>
+    <td scope="row">{{ city.population }}</td>
+
+    </tr>
+{% empty %}
+<h2> Insufficient user data </h2>
+{%endfor %}
+</tbody>
+</table>
+<br>
+<br>
+{% include 'elongoApp/footer_template.html' %}
+</body>

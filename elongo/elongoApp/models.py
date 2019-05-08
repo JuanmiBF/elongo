@@ -5,7 +5,7 @@ from django.db import models
 
 
 class City(models.Model):
-	name = models.TextField(blank=False , null=False)
+	name = models.CharField(blank=False , null=False,max_length=20)
 	population = models.BigIntegerField(blank=False, null=False, default=0)
 
 	def __str__(self):

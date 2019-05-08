@@ -1,0 +1,17 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+{% block content %}
+    <div class="container" align="center">
+    <br><br>
+    <h2>New city</h2>
+        <img src="http://dontmakeplansfor2018.com/wsp_images/city.png" height="200" width="300">
+        <br>
+        <br>
+    <form method="POST" class="form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary mb-2">Save</button>
+    </form>
+    </div>
+{% endblock %}
+{% include 'elongoApp/footer_template.html' %}
+</body>

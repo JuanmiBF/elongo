@@ -3,6 +3,7 @@ from .models import *
 import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.offline as opy
+from .forms import *
 
 import datetime
 
@@ -94,3 +95,20 @@ def index(request):
 def to_unix_time(dt):
     epoch = datetime.datetime.utcfromtimestamp(0)
     return (dt - epoch).total_seconds() * 1000
+
+
+def new_city(request):
+    if request.method == "POST":
+        form= CityForm(request.POST)
+        if form.is_valid():
+            city = form.save(commit=False)
+            city.save()
+            return render(request, 'elongoApp/index.html')
+    else:
+        form = CityForm()
+        return render(request, 'elongoApp/city_form.html', {'form': form})
+
+def list_city(request):
+    list = City.objects.all()
+    return render(request, 'elongoApp/listCity.html', {'list': list})
+
