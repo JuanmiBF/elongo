@@ -1,24 +1,31 @@
 {% include 'elongoApp/header_template.html' %}
 <body>
-<h1>{{title}}</h1>
-<table class="table">
-<thead class="thead-dark">
-<tr>
-    <th scope="col">Name</th>
-    <th scope="col">Population</th>
-</tr>
-</thead>
-<tbody>
-{% for city in list%}
-    <tr>
-    <td scope="row">{{ city.name }}</td>
-    <td scope="row">{{ city.population }}</td>
+<br>
+<div align="center"><h1>Cities List</h1>
+    <br>
+    <img src="https://imagendeciudades.com/wp-content/uploads/2016/09/Imagenes-PNG-de-siluetas-de-ciudades.png"
+         width="700" align="center"></div>
+<br>
 
+<br>
+<table class="table">
+    <thead class="table-warning">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Population</th>
     </tr>
-{% empty %}
-<h2> Insufficient user data </h2>
-{%endfor %}
-</tbody>
+    </thead>
+    <tbody>
+    {% for city in list %}
+        <tr>
+            <td scope="row">{{ city.name }}</td>
+            <td scope="row">{{ city.population }}</td>
+
+        </tr>
+    {% empty %}
+        <h2> Insufficient user data </h2>
+    {% endfor %}
+    </tbody>
 </table>
 <br>
 <br>
