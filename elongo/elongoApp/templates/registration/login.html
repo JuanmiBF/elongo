@@ -1,0 +1,8 @@
+{% include 'elongoApp/header_template.html' %}
+
+{% block content %}
+  <h2>Login</h2>
+  <a class="btn btn-dark" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+{% endblock %}
+
+{% include 'elongoApp/footer_template.html' %}
