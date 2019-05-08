@@ -12,6 +12,9 @@ def delete_database_rows():
 	if len(ElectricData.objects.all()) != 0:
 		ElectricData.objects.all().delete()
 
+	if len(City.objects.all()) != 0:
+		City.objects.all().delete()
+
 
 def populate():
 	with open('electric-generation-by-fuel-type-gwh-beginning-1960.csv') as csv_file:

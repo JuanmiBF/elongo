@@ -5,11 +5,11 @@ from django.db import models
 
 
 class City(models.Model):
-	name = models.CharField(blank=False , null=False,max_length=20)
+	name = models.CharField(blank=False, null=False, max_length=20)
 	population = models.BigIntegerField(blank=False, null=False, default=0)
 
 	def __str__(self):
-		return str(self.year)
+		return str(self.name)
 
 
 class ElectricData(models.Model):
@@ -28,9 +28,7 @@ class ElectricData(models.Model):
 	wind = models.BigIntegerField(blank=False, null=False, default=0)
 	solar = models.BigIntegerField(blank=False, null=False, default=0)
 	total = models.BigIntegerField(blank=False, null=False, default=0)
-	city =  models.ForeignKey(City, on_delete = models.CASCADE,default=None)
+	city = models.ForeignKey(City, on_delete=models.CASCADE, default=None)
 
 	def __str__(self):
 		return str(self.year)
-
-

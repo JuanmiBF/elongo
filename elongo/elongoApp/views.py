@@ -36,7 +36,7 @@ def index(request):
     data = [coal, petroleum]
 
     layoutComp = dict(
-        title='Comparison coal/petroleum',
+        title='Coal/petroleum electricity generation comparison',
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([
@@ -65,7 +65,7 @@ def index(request):
 
     # This is for not comparing grapth
     layout = dict(
-        title='Coal',
+        title='Electricity generation with coal',
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([
@@ -113,3 +113,99 @@ def list_city(request):
     list = City.objects.all()
     return render(request, 'elongoApp/listCity.html', {'list': list})
 
+
+def comparison(request):
+    if request.method == 'POST':
+        form = ComparisonForm(request.POST)
+        if form.is_valid():
+            graph = generate_graph(form.cleaned_data['city'], form.cleaned_data['field_1'],
+                                       form.cleaned_data['field_2'])
+
+            return render(request, 'comparison_form.html', {'form': form, 'graph': graph})
+
+    else:
+        form = ComparisonForm()
+    return render(request, 'comparison_form.html', {'form': form})
+
+
+def generate_graph(city, field_1, field_2):
+    electric_data = ElectricData.objects.filter(city=city).order_by('year')
+
+    x = [datetime.datetime(year=ed.year, month=1, day=1) for ed in electric_data]
+    field_1_y = [getattr(ed, field_1) for ed in electric_data]
+
+    field_1_scatter = go.Scatter(
+        x=x,
+        y=field_1_y,
+        name=field_1.replace("_", " ").capitalize(),
+        line=dict(color='#17BECF'),
+        opacity=0.8)
+
+    if not field_2:
+        layout = dict(
+            title="{} electricity generation in the city of {}".format(field_1.replace("_", " ").capitalize(), city),
+            xaxis=dict(
+                title='Year',
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=1,
+                             label='1y',
+                             step='year',
+                             stepmode='backward'),
+                        dict(count=5,
+                             label='5y',
+                             step='year',
+                             stepmode='backward'),
+                        dict(step='all')
+                    ])
+                ),
+                rangeslider=dict(
+                    visible=True
+                ),
+                type='date'
+            ),
+            yaxis=dict(title='GWh')
+        )
+        fig = dict(data=[field_1_scatter], layout=layout)
+        graph = opy.plot(fig, auto_open=False, output_type='div')
+    else:
+        field_2_y = [getattr(ed, field_2) for ed in electric_data]
+
+        field_2_scatter = go.Scatter(
+            x=x,
+            y=field_2_y,
+            name=field_2.replace("_", " ").capitalize(),
+            line=dict(color='#7F7F7F'),
+            opacity=0.8)
+
+        data = [field_1_scatter, field_2_scatter]
+
+        layout = dict(
+            title='{}/{} electricity generation comparison in the city of {}'.format(field_1.replace("_", " ").capitalize(), field_2.replace("_", " "), city),
+            xaxis=dict(
+                title='Year',
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=1,
+                             label='1y',
+                             step='year',
+                             stepmode='backward'),
+                        dict(count=5,
+                             label='5y',
+                             step='year',
+                             stepmode='backward'),
+                        dict(step='all')
+                    ])
+                ),
+                rangeslider=dict(
+                    visible=True
+                ),
+                type='date'
+            ),
+            yaxis=dict(title='GWh')
+        )
+
+        fig = dict(data=data, layout=layout)
+        graph = opy.plot(fig, auto_open=False, output_type='div')
+
+    return graph
