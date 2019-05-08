@@ -4,6 +4,14 @@ from django.db import models
 # Create your models here.
 
 
+class City(models.Model):
+	name = models.TextField(blank=False , null=False)
+	population = models.BigIntegerField(blank=False, null=False, default=0)
+
+	def __str__(self):
+		return str(self.year)
+
+
 class ElectricData(models.Model):
 	year = models.IntegerField(blank=False, null=False)
 	coal = models.BigIntegerField(blank=False, null=False, default=0)
@@ -20,6 +28,9 @@ class ElectricData(models.Model):
 	wind = models.BigIntegerField(blank=False, null=False, default=0)
 	solar = models.BigIntegerField(blank=False, null=False, default=0)
 	total = models.BigIntegerField(blank=False, null=False, default=0)
+	city =  models.ForeignKey(City, on_delete = models.CASCADE,default=None)
 
 	def __str__(self):
 		return str(self.year)
+
+

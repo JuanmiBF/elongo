@@ -17,6 +17,7 @@ def populate():
 	with open('electric-generation-by-fuel-type-gwh-beginning-1960.csv') as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=',')
 		line_count = 0
+		city = City.objects.create(name="New York",population= 8000000)
 		for row in csv_reader:
 			if line_count == 0:
 				print(f'Column names are {", ".join(row)}')
@@ -38,7 +39,8 @@ def populate():
 												 landfill_gas=row[10] if row[10] != '' else 0,
 												 wood=row[11] if row[11] != '' else 0, wind=row[12] if row[12] != '' else 0,
 												 solar=row[13] if row[13] != '' else 0,
-												 total=row[14] if row[14] != '' else 0)
+												 total=row[14] if row[14] != '' else 0,
+												 city = city)
 				line_count += 1
 		print(f'Processed {line_count} lines.')
 
