@@ -13,6 +13,7 @@
     <tr>
         <th scope="col">Name</th>
         <th scope="col">Population</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
         <tr>
             <td scope="row">{{ city.name }}</td>
             <td scope="row">{{ city.population }}</td>
+            <td scope="row"><a href="{% url 'elongoApp:city_details' city_id=city.id %}">Details</a></td>
 
         </tr>
     {% empty %}

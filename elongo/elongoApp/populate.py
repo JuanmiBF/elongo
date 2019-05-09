@@ -9,6 +9,8 @@ from elongoApp.models import *
 
 
 def delete_database_rows():
+	if len(City.objects.all()) != 0:
+		City.objects.all().delete()
 	if len(ElectricData.objects.all()) != 0:
 		ElectricData.objects.all().delete()
 
@@ -43,7 +45,7 @@ def populate():
 												 wood=row[11] if row[11] != '' else 0, wind=row[12] if row[12] != '' else 0,
 												 solar=row[13] if row[13] != '' else 0,
 												 total=row[14] if row[14] != '' else 0,
-												 city = city)
+												 city = city, population= 0)
 				line_count += 1
 		print(f'Processed {line_count} lines.')
 

@@ -1,0 +1,18 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+{% block content %}
+    <br>
+    <div class="container" align="center" style="border-style: solid;
+  border-width: 1px; border-color: black">
+    <br><br>
+    <h2>New Electric Data</h2>
+        <img src="https://www.certificadosenergeticos.com/wp-content/uploads/2014/03/nueva-redacci%C3%B3n-CTE.png" height="200" width="300">
+        <br><br><br>
+    <form method="POST" class="form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary mb-2">Save</button>
+    </form>
+    </div>
+{% endblock %}
+{% include 'elongoApp/footer_template.html' %}
+</body>

@@ -5,7 +5,6 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.offline as opy
 from .forms import *
-
 import datetime
 
 # Create your views here.
@@ -209,3 +208,42 @@ def generate_graph(city, field_1, field_2):
         graph = opy.plot(fig, auto_open=False, output_type='div')
 
     return graph
+
+def city_details(request,city_id):
+    if city_id:
+        city = City.objects.filter(id=city_id)
+        list_electric_data = ElectricData.objects.filter(city=city)
+        average_total_consume = 0
+        average_coal_consume=0
+        average_natural_gas_consume = 0
+        average_petroleum_consume = 0
+        average_hydro_consume = 0
+        average_nuclear_consume = 0
+        average_other_consume = 0
+        average_wood_consume = 0
+        average_wind_consume = 0
+        average_solar_consume = 0
+        if len(list_electric_data)>0:
+          average_total_consume = lambda x: average_total_consume + x.total,list_electric_data
+          #average_total_consume =  average_total_consume + t.total for t in list_electric_data
+
+
+    return render(request, 'elongoApp/listElectricData.html', {'list': list_electric_data})
+
+
+def new_electric_data(request):
+    if request.method == "POST":
+        form= ElectricDataForm(request.POST)
+        if form.is_valid():
+            electricData = form.save(commit=False)
+            electricData.save()
+            return render(request, 'elongoApp/index.html')
+    else:
+        form = ElectricDataForm()
+        return render(request, 'elongoApp/electric_data_form.html', {'form': form})
+
+def list_electric_data(request):
+    list = ElectricData.objects.all().order_by('city','year')
+    return render(request, 'elongoApp/listElectricData.html', {'list': list})
+
+

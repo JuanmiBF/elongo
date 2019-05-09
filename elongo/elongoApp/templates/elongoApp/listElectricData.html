@@ -1,0 +1,35 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+<br>
+<div align="center"><h1>Electric data List</h1>
+    <br>
+    <img src="http://www.energea.com.bo/wp-content/uploads/2017/02/eficiencia_energetica.jpg"
+         width="500" align="center"></div>
+<br>
+
+<br>
+<table class="table">
+    <thead class="table-warning">
+    <tr>
+        <th scope="col">City</th>
+        <th scope="col">Year</th>
+        <th scope="col">Total consume</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for electricData in list %}
+        <tr>
+            <td scope="row">{{ electricData.city }}</td>
+            <td scope="row">{{ electricData.year }}</td>
+            <td scope="row">{{ electricData.total }}</td>
+
+        </tr>
+    {% empty %}
+        <h2> Insufficient user data </h2>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+{% include 'elongoApp/footer_template.html' %}
+</body>
