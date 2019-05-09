@@ -1,19 +1,96 @@
 {% include 'elongoApp/header_template.html' %}
 <body>
 <br>
-<div align="center"><h1>Electric data List</h1>
+<div align="center"><h1>{{ title}}</h1>
     <br>
-    <img src="http://www.energea.com.bo/wp-content/uploads/2017/02/eficiencia_energetica.jpg"
-         width="500" align="center"></div>
+    <!--<img src="http://www.energea.com.bo/wp-content/uploads/2017/02/eficiencia_energetica.jpg"
+         width="500" align="center">--></div>
+<br>
+<div class="row" style="margin-left: 5px">
+    <div class="col-6 col-md-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">AVERAGE TOTAL GENERATED
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ average_total_consume }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">AVERAGE POPULATION</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ population }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="col-6 col-md-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">TOP PRODUCTION YEAR</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ year }}</div>
+                    </div>
+                    <div class="col-auto">
+                       <i class="far fa-arrow-alt-circle-up"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
 <br>
 
-<br>
+<div class="row">
+      <div class="col-6 col-md-4" style="padding-left: 100px">
+          <h4>{{ title_graph_1}}</h4></div>
+    <div class="col-6 col-md-4" style="padding-left: 150px">
+          <h4>{{ title_graph_2}}</h4></div>
+</div>
+
+<div class="row">
+    <div class="row align-items-center">
+        <br>
+        {% if graph %}
+            <div class="container" style="width:600px;height:500px;">
+                {{ graph|safe }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="row align-items-end" style="padding-left: 100px">
+     <br>
+        {% if graph2 %}
+            <div class="container" style="width:600px;height:500px;">
+                {{ graph2|safe }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
 <table class="table">
     <thead class="table-warning">
     <tr>
         <th scope="col">City</th>
         <th scope="col">Year</th>
-        <th scope="col">Total consume</th>
+        <th scope="col">Total produced</th>
     </tr>
     </thead>
     <tbody>

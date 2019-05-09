@@ -211,8 +211,9 @@ def generate_graph(city, field_1, field_2):
 
 def city_details(request,city_id):
     if city_id:
-        city = City.objects.filter(id=city_id)
+        city = City.objects.filter(id=city_id).first()
         list_electric_data = ElectricData.objects.filter(city=city)
+        year = list_electric_data.order_by('-total').first().year
         average_total_consume = 0
         average_coal_consume=0
         average_natural_gas_consume = 0
@@ -223,12 +224,66 @@ def city_details(request,city_id):
         average_wood_consume = 0
         average_wind_consume = 0
         average_solar_consume = 0
-        if len(list_electric_data)>0:
-          average_total_consume = lambda x: average_total_consume + x.total,list_electric_data
-          #average_total_consume =  average_total_consume + t.total for t in list_electric_data
+        population = 0
+
+        if len(list_electric_data) > 0:
+            count = len(list_electric_data)
+
+            for electric_data in list_electric_data:
+                average_total_consume += electric_data.total
+                average_coal_consume += electric_data.coal
+                average_natural_gas_consume += electric_data.natural_gas
+                average_petroleum_consume += electric_data.petroleum
+                average_hydro_consume += electric_data.ps_hydro + electric_data.conv_hydro
+                average_nuclear_consume += electric_data.nuclear
+                average_other_consume += electric_data.other + electric_data.landfill_gas +electric_data.waste +electric_data.net_imports
+                average_wood_consume += electric_data.wood
+                average_wind_consume += electric_data.wind
+                average_solar_consume += electric_data.solar
+                population+= electric_data.population
+
+            average_total_consume/=count
+            average_natural_gas_consume/=count
+            average_petroleum_consume/=count
+            average_hydro_consume/=count
+            average_nuclear_consume/=count
+            average_other_consume/=count
+            average_wood_consume/=count
+            average_wind_consume/=count
+            average_solar_consume/=count
+            if population !=0:
+                population/=count
 
 
-    return render(request, 'elongoApp/listElectricData.html', {'list': list_electric_data})
+    #Total produced average graph
+    labels = ['Natural Gas ', 'Petroleum', 'Hydro', 'Nuclear', 'Others', 'Wood', 'Wind','Solar']
+    values = [average_natural_gas_consume, average_petroleum_consume, average_hydro_consume, average_nuclear_consume,average_other_consume,
+              average_wood_consume,average_wind_consume ,average_solar_consume]
+    trace = go.Pie(labels=labels, values=values)
+    graph = opy.plot([trace], auto_open=False, output_type='div')
+
+    # Energies
+    labels = [ 'Non-renewable energy','Renewable energy', 'Others']
+    values = [average_natural_gas_consume + average_petroleum_consume + average_nuclear_consume,
+              average_hydro_consume+ average_wood_consume+ average_wind_consume+ average_solar_consume,
+              average_other_consume
+             ]
+    trace = go.Pie(labels=labels, values=values)
+    graph2 = opy.plot([trace], auto_open=False, output_type='div')
+
+
+
+
+
+    return render(request, 'elongoApp/listElectricData.html', {'graph': graph,
+                                                               'graph2': graph2,
+                                                               'title': city.name,
+                                                               'year': year,
+                                                               'title_graph_1': "Total produced average graph",
+                                                               'title_graph_2': "Energies type distribution",
+                                                               'population':int(population),
+                                                               'average_total_consume': int(average_total_consume),
+                                                               'list':list_electric_data})
 
 
 @login_required()
