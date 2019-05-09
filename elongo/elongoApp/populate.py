@@ -14,15 +14,12 @@ def delete_database_rows():
 	if len(ElectricData.objects.all()) != 0:
 		ElectricData.objects.all().delete()
 
-	if len(City.objects.all()) != 0:
-		City.objects.all().delete()
-
 
 def populate():
 	with open('electric-generation-by-fuel-type-gwh-beginning-1960.csv') as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=',')
 		line_count = 0
-		city = City.objects.create(name="New York",country="EU",continent="America")
+		city = City.objects.create(name="New York",country="USA",continent="America")
 		for row in csv_reader:
 			if line_count == 0:
 				print(f'Column names are {", ".join(row)}')
