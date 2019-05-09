@@ -4,19 +4,18 @@ from .models import *
 
 
 class ElectricDataForm(forms.ModelForm):
-
-    class Meta:
-        model = ElectricData
-        city = forms.ModelChoiceField(queryset=City.objects.all())
-        fields = ('year', 'coal','natural_gas', 'petroleum','conv_hydro', 'ps_hydro','nuclear', 'net_imports',
-                  'other', 'waste', 'landfill_gas', 'wood','wind', 'solar', 'total','city','population')
+	class Meta:
+		model = ElectricData
+		city = forms.ModelChoiceField(queryset=City.objects.all())
+		fields = ('year', 'coal', 'natural_gas', 'petroleum', 'conv_hydro', 'ps_hydro', 'nuclear', 'net_imports',
+				  'other', 'waste', 'landfill_gas', 'wood', 'wind', 'solar', 'total', 'city', 'population')
 
 
 class CityForm(forms.ModelForm):
+	class Meta:
+		model = City
+		fields = ('name', 'country', 'continent')
 
-    class Meta:
-        model = City
-        fields = ('name','country','continent')
 
 class ComparisonForm(forms.Form):
 	CHOICES = ((None, '----------'), ('coal', 'Coal'), ('natural_gas', 'Natural gas'),

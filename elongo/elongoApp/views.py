@@ -231,6 +231,7 @@ def city_details(request,city_id):
     return render(request, 'elongoApp/listElectricData.html', {'list': list_electric_data})
 
 
+@login_required()
 def new_electric_data(request):
     if request.method == "POST":
         form= ElectricDataForm(request.POST)
