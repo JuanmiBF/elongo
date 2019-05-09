@@ -359,3 +359,38 @@ def city_details_year(request, city_id, year):
                                                                    'population': "{:,}".format(electric_data.population),
                                                                    'graph': graph,
                                                                    'title_graph': 'Types of electricity generation'})
+
+
+def generate_pie_chart(city, year):
+    city = City.objects.filter(id=city.id).first()
+    electric_data = ElectricData.objects.filter(city=city, year=year).first()
+    graph = None
+    title = ""
+    if electric_data:
+        title = "{} electricity generation, year {}".format(city, str(year))
+
+        labels = ['Natural Gas ', 'Petroleum', 'Hydro', 'Nuclear', 'Others', 'Wood', 'Wind', 'Solar']
+        values = [electric_data.natural_gas, electric_data.petroleum, electric_data.conv_hydro + electric_data.ps_hydro,
+                  electric_data.nuclear,
+                  electric_data.net_imports + electric_data.other + electric_data.waste + electric_data.landfill_gas,
+                  electric_data.wood, electric_data.wind, electric_data.solar]
+        trace = go.Pie(labels=labels, values=values)
+        graph = opy.plot([trace], auto_open=False, output_type='div')
+
+    return graph, title
+
+
+def pie_chart(request):
+    no_data = None
+    if request.method == 'POST':
+        form = PieChartForm(request.POST)
+        if form.is_valid():
+            graph, title = generate_pie_chart(form.cleaned_data['city'], form.cleaned_data['year'])
+            if not graph:
+                no_data = "There is no data for {} in year {}".format(form.cleaned_data['city'], str(form.cleaned_data['year']))
+
+            return render(request, 'pie_chart_form.html', {'form': form, 'graph': graph, 'title': title, 'no_data': no_data})
+
+    else:
+        form = PieChartForm()
+    return render(request, 'comparison_form.html', {'form': form})

@@ -13,5 +13,6 @@ urlpatterns = [
     path('electricData/new', views.new_electric_data, name='new_electric_data'),
     path('electricData/list', views.list_electric_data, name='list_electric_data'),
     path('city/details/<int:city_id>/<int:year>', views.city_details_year, name='city_details_year'),
+    path('pie_chart', views.pie_chart, name='pie_chart'),
 
 ]

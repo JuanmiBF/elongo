@@ -1,0 +1,32 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+{% block content %}
+    <br>
+    <div class="container" align="center" style="border-style: solid;
+  border-width: 1px; border-color: black">
+    <br><br>
+    <h2>Compare</h2>
+    <form method="POST" class="form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark">Generate graph!</button>
+    </form>
+    </div>
+
+    {% if no_data %}
+        <h2 class="container" align="center" style="color: red; margin-top: 3%;">
+            {{ no_data }}
+        </h2>
+    {% endif %}
+
+    <div align="center">
+        <div class="col-6 col-md-4" style="margin-top: 3%;">
+            <h4>{{ title }}</h4></div>
+    </div>
+    {% if graph %}
+        <div class="container" align="center" style="width:600px;height:500px">
+            {{ graph|safe }}
+        </div>
+    {% endif %}
+{% endblock %}
+{% include 'elongoApp/footer_template.html' %}
+</body>
