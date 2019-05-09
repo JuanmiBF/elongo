@@ -20,6 +20,9 @@ def populate():
 		csv_reader = csv.reader(csv_file, delimiter=',')
 		line_count = 0
 		city = City.objects.create(name="New York",country="USA",continent="America")
+		if not User.objects.filter(username='admin').first():
+			User.objects.create_superuser('admin', '', 'patata123')
+		superuser = User.objects.filter(username='admin').first()
 		for row in csv_reader:
 			if line_count == 0:
 				print(f'Column names are {", ".join(row)}')
@@ -42,7 +45,7 @@ def populate():
 												 wood=row[11] if row[11] != '' else 0, wind=row[12] if row[12] != '' else 0,
 												 solar=row[13] if row[13] != '' else 0,
 												 total=row[14] if row[14] != '' else 0,
-												 city = city, population= 0)
+												 city = city, population= 0, creator=superuser)
 				line_count += 1
 		print(f'Processed {line_count} lines.')
 

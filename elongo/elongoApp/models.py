@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -9,9 +10,8 @@ class City(models.Model):
 	country = models.CharField(blank=False , null=False,max_length=20,default=None)
 	continent = models.CharField(blank=False, null=False, max_length=20,default=None)
 
-
 	def __str__(self):
-		return str(self.name)
+		return "{}, {}, {}".format(str(self.name), str(self.country), str(self.continent))
 
 
 class ElectricData(models.Model):
@@ -31,8 +31,8 @@ class ElectricData(models.Model):
 	solar = models.BigIntegerField(blank=False, null=False, default=0)
 	total = models.BigIntegerField(blank=False, null=False, default=0)
 	population = models.BigIntegerField(blank=False, null=False, default=0)
-	city =  models.ForeignKey(City, on_delete = models.CASCADE,default=None)
-
+	city = models.ForeignKey(City, on_delete = models.CASCADE,default=None)
+	creator = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
 	def __str__(self):
 		return str(self.year)
