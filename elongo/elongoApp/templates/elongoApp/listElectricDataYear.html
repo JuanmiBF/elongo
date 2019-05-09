@@ -1,0 +1,205 @@
+{% include 'elongoApp/header_template.html' %}
+<body>
+<br>
+<div align="center"><h1>{{ title }}</h1>
+    <br>
+    <!--<img src="http://www.energea.com.bo/wp-content/uploads/2017/02/eficiencia_energetica.jpg"
+         width="500" align="center">--></div>
+<br>
+<div class="row" style="margin-left: 5px">
+    <div class="col-6 col-md-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Coal electricity generation
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ coal_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Natural gas electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ natural_gas_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="col-6 col-md-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Petroleum electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ petroleum_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                       <i class="fas fa-oil-can"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hydraulic electricity generation
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ hydraulic_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Nuclear electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nuclear_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-radiation-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="col-6 col-md-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Wood electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ wood_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                       <i class="fas fa-tree"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Wind electricity generation
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ wind_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Solar electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ solar_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="col-6 col-md-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Other sources electricity generation</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ other_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                       <i class="far fa-lightbulb"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total electricity generation
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_generation }} GWh</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Population</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ population }} people</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<div align="center">
+      <div class="col-6 col-md-4" style="padding-left: 100px">
+          <h4>{{ title_graph }}</h4></div>
+</div>
+
+<div align="center">
+    <div class="row align-items-center">
+        <br>
+        {% if graph %}
+            <div class="container" style="width:600px;height:500px;">
+                {{ graph|safe }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<br>
+<br>
+{% include 'elongoApp/footer_template.html' %}
+</body>

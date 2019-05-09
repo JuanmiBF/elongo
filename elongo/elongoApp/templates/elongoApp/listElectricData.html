@@ -90,7 +90,8 @@
     <tr>
         <th scope="col">City</th>
         <th scope="col">Year</th>
-        <th scope="col">Total produced</th>
+        <th scope="col">Total generated</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -98,7 +99,8 @@
         <tr>
             <td scope="row">{{ electricData.city }}</td>
             <td scope="row">{{ electricData.year }}</td>
-            <td scope="row">{{ electricData.total }}</td>
+            <td scope="row">{{ electricData.total }} GWh</td>
+            <td scope="row"><a href="/elongoApp/city/details/{{ electricData.city.id }}/{{ electricData.year }}">Details</a></td>
 
         </tr>
     {% empty %}

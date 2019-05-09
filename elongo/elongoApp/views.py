@@ -209,6 +209,7 @@ def generate_graph(city, field_1, field_2):
 
     return graph
 
+
 def city_details(request,city_id):
     if city_id:
         city = City.objects.filter(id=city_id).first()
@@ -305,8 +306,37 @@ def new_electric_data(request):
         form = ElectricDataForm()
         return render(request, 'elongoApp/electric_data_form.html', {'form': form, 'error': error})
 
+
 def list_electric_data(request):
     list = ElectricData.objects.all().order_by('city','year')
     return render(request, 'elongoApp/listElectricData.html', {'list': list})
 
 
+def city_details_year(request, city_id, year):
+    city = City.objects.filter(id=city_id).first()
+    electric_data = ElectricData.objects.filter(city=city, year=year).first()
+    title = "{} electricity generation, year {}".format(city, str(year))
+
+    labels = ['Natural Gas ', 'Petroleum', 'Hydro', 'Nuclear', 'Others', 'Wood', 'Wind', 'Solar']
+    values = [electric_data.natural_gas, electric_data.petroleum, electric_data.conv_hydro + electric_data.ps_hydro, electric_data.nuclear,
+              electric_data.net_imports + electric_data.other + electric_data.waste + electric_data.landfill_gas,
+              electric_data.wood, electric_data.wind, electric_data.solar]
+    trace = go.Pie(labels=labels, values=values)
+    graph = opy.plot([trace], auto_open=False, output_type='div')
+
+    return render(request, 'elongoApp/listElectricDataYear.html', {'title': title, 'coal_generation': "{:,}".format(electric_data.coal),
+                                                                   'natural_gas_generation': "{:,}".format(electric_data.natural_gas),
+                                                                   'petroleum_generation': "{:,}".format(electric_data.petroleum),
+                                                                   'hydraulic_generation': "{:,}".format(electric_data.conv_hydro + electric_data.ps_hydro),
+                                                                   'nuclear_generation': "{:,}".format(electric_data.nuclear),
+                                                                   'wood_generation': "{:,}".format(electric_data.wood),
+                                                                   'wind_generation': "{:,}".format(electric_data.wind),
+                                                                   'solar_generation': "{:,}".format(electric_data.solar),
+                                                                   'other_generation': "{:,}".format(electric_data.net_imports
+                                                                                       + electric_data.other
+                                                                                       + electric_data.waste
+                                                                                       + electric_data.landfill_gas),
+                                                                   'total_generation': "{:,}".format(electric_data.total),
+                                                                   'population': "{:,}".format(electric_data.population),
+                                                                   'graph': graph,
+                                                                   'title_graph': 'Types of electricity generation'})
