@@ -14,8 +14,70 @@ def delete_database_rows():
 	if len(ElectricData.objects.all()) != 0:
 		ElectricData.objects.all().delete()
 
+def create_population_dict():
+	population = dict()
+	population['1960'] = 7781984
+	population['1961'] = 7791984
+	population['1962'] = 7798198
+	population['1963'] = 7801424
+	population['1964'] = 7822924
+	population['1965'] = 7829318
+	population['1966'] = 7835947
+	population['1967'] = 7848925
+	population['1968'] = 7851654
+	population['1969'] = 7872814
+	population['1970'] = 7895563
+	population['1971'] = 7881115
+	population['1972'] = 7869654
+	population['1973'] = 7866815
+	population['1974'] = 7845759
+	population['1975'] = 7836924
+	population['1976'] = 7620322
+	population['1977'] = 7428841
+	population['1978'] = 7395954
+	population['1979'] = 7158361
+	population['1980'] = 7071639
+	population['1981'] = 7082895
+	population['1982'] = 7085645
+	population['1983'] = 7102215
+	population['1984'] = 7103842
+	population['1985'] = 7109624
+	population['1986'] = 7116328
+	population['1987'] = 7195784
+	population['1988'] = 7243485
+	population['1989'] = 7285991
+	population['1990'] = 7322671
+	population['1991'] = 7389458
+	population['1992'] = 7428215
+	population['1993'] = 7498659
+	population['1994'] = 7526842
+	population['1995'] = 7587332
+	population['1996'] = 7695884
+	population['1997'] = 7752515
+	population['1998'] = 7843624
+	population['1999'] = 7995845
+	population['2000'] = 8008547
+	population['2001'] = 8001461
+	population['2002'] = 8015547
+	population['2003'] = 8095884
+	population['2004'] = 8089216
+	population['2005'] = 8114349
+	population['2006'] = 8112281
+	population['2007'] = 8156964
+	population['2008'] = 8148774
+	population['2009'] = 8176518
+	population['2010'] = 8193703
+	population['2011'] = 8292688
+	population['2012'] = 8383504
+	population['2013'] = 8458642
+	population['2014'] = 8521135
+	population['2015'] = 8582459
+
+	return population
+
 
 def populate():
+	population = create_population_dict()
 	with open('electric-generation-by-fuel-type-gwh-beginning-1960.csv') as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=',')
 		line_count = 0
@@ -45,7 +107,7 @@ def populate():
 												 wood=row[11] if row[11] != '' else 0, wind=row[12] if row[12] != '' else 0,
 												 solar=row[13] if row[13] != '' else 0,
 												 total=row[14] if row[14] != '' else 0,
-												 city = city, population= 0, creator=superuser)
+												 city = city, population= population[str(row[0])], creator=superuser)
 				line_count += 1
 		print(f'Processed {line_count} lines.')
 

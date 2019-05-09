@@ -59,7 +59,7 @@ class ComparisonForm(forms.Form):
 			   ('other', 'Other'),
 			   ('waste', 'Waste'), ('landfill_gas', 'Landfill gas'), ('wood', 'Wood'), ('wind', 'Wind'),
 			   ('solar', 'Solar'),
-			   ('total', 'Total'))
+			   ('total', 'Total'), ('population', 'Population'))
 
 	city = forms.ModelChoiceField(queryset=City.objects.all(), required=True)
 	field_1 = forms.ChoiceField(choices=CHOICES, required=True)
