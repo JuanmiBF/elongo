@@ -214,7 +214,7 @@ def city_details(request,city_id):
     if city_id:
         city = City.objects.filter(id=city_id).first()
         list_electric_data = ElectricData.objects.filter(city=city)
-        year = list_electric_data.order_by('-total').first().year
+        year = None
         average_total_consume = 0
         average_coal_consume=0
         average_natural_gas_consume = 0
@@ -229,7 +229,7 @@ def city_details(request,city_id):
 
         if len(list_electric_data) > 0:
             count = len(list_electric_data)
-
+            year = list_electric_data.order_by('-total').first().year
             for electric_data in list_electric_data:
                 average_total_consume += electric_data.total
                 average_coal_consume += electric_data.coal
@@ -242,6 +242,7 @@ def city_details(request,city_id):
                 average_wind_consume += electric_data.wind
                 average_solar_consume += electric_data.solar
                 population+= electric_data.population
+
 
             average_total_consume/=count
             average_natural_gas_consume/=count
@@ -272,16 +273,34 @@ def city_details(request,city_id):
     trace = go.Pie(labels=labels, values=values)
     graph2 = opy.plot([trace], auto_open=False, output_type='div')
 
+    #Population by year
+    years = list()
+    populations = list()
+
+    for ed in list_electric_data.order_by('year'):
+        years.append(ed.year)
+        populations.append(ed.population)
+
+    data = [go.Bar(
+        x=years,
+        y=populations
+    )]
+
+    graph3 = opy.plot(data, auto_open=False, output_type='div')
+
+
 
 
 
 
     return render(request, 'elongoApp/listElectricData.html', {'graph': graph,
                                                                'graph2': graph2,
+                                                               'graph3': graph3,
                                                                'title': city.name,
                                                                'year': year,
                                                                'title_graph_1': "Total produced average graph",
                                                                'title_graph_2': "Energies type distribution",
+                                                               'title_graph_3': "Population by year",
                                                                'population':int(population),
                                                                'average_total_consume': int(average_total_consume),
                                                                'list':list_electric_data})

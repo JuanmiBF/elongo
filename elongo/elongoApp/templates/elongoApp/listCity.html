@@ -12,7 +12,8 @@
     <thead class="table-warning">
     <tr>
         <th scope="col">Name</th>
-        <th scope="col">Population</th>
+        <th scope="col">Country</th>
+        <th scope="col">Continent</th>
         <th scope="col"></th>
     </tr>
     </thead>
@@ -20,8 +21,10 @@
     {% for city in list %}
         <tr>
             <td scope="row">{{ city.name }}</td>
-            <td scope="row">{{ city.population }}</td>
-            <td scope="row"><a href="{% url 'elongoApp:city_details' city_id=city.id %}">Details</a></td>
+            <td scope="row">{{ city.country }}</td>
+            <td scope="row">{{ city.continent }}</td>
+            <td scope="row"><a href="{% url 'elongoApp:city_details' city_id=city.id %}">
+                <button type="button" class="btn btn-dark">Details</button></a></td>
 
         </tr>
     {% empty %}
