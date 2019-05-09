@@ -9,8 +9,13 @@
         <img src="https://www.certificadosenergeticos.com/wp-content/uploads/2014/03/nueva-redacci%C3%B3n-CTE.png" height="200" width="300">
         <br><br><br>
     <form method="POST" class="form">{% csrf_token %}
+        {% if error %}
+            <div style="display: inline-block; color: red;">
+                <p>{{ error }}</p>
+            </div><br/><br/>
+    {% endif %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary mb-2">Save</button>
+        <button type="submit" class="btn btn-dark">Save</button>
     </form>
     </div>
 {% endblock %}

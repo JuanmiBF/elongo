@@ -233,15 +233,22 @@ def city_details(request,city_id):
 
 @login_required()
 def new_electric_data(request):
+    error = None
     if request.method == "POST":
-        form= ElectricDataForm(request.POST)
+        form = ElectricDataForm(request.POST)
         if form.is_valid():
-            electricData = form.save(commit=False)
-            electricData.save()
-            return render(request, 'elongoApp/index.html')
+            if ElectricData.objects.filter(city=form.cleaned_data['city'], year=form.cleaned_data['year']):
+                error = "There is already data for {} in year {}".format(str(form.cleaned_data['city']), str(form.cleaned_data['year']))
+                return render(request, 'elongoApp/electric_data_form.html', {'form': form, 'error': error})
+            elif datetime.datetime.now().year < form.cleaned_data['year']:
+                error = "Year cannot be in the future ({})".format(str(form.cleaned_data['year']))
+                return render(request, 'elongoApp/electric_data_form.html', {'form': form, 'error': error})
+            else:
+                form.save(request.user)
+                return render(request, 'elongoApp/index.html') #TODO modify this render
     else:
         form = ElectricDataForm()
-        return render(request, 'elongoApp/electric_data_form.html', {'form': form})
+        return render(request, 'elongoApp/electric_data_form.html', {'form': form, 'error': error})
 
 def list_electric_data(request):
     list = ElectricData.objects.all().order_by('city','year')
