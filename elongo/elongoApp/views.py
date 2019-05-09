@@ -213,7 +213,7 @@ def generate_graph(city, field_1, field_2):
 def city_details(request,city_id):
     if city_id:
         city = City.objects.filter(id=city_id).first()
-        list_electric_data = ElectricData.objects.filter(city=city)
+        list_electric_data = ElectricData.objects.filter(city=city).order_by('-year')
         year = None
         average_total_consume = 0
         average_coal_consume=0
