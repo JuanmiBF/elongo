@@ -1,0 +1,7 @@
+Django==2.1.7
+djongo==1.2.31
+social-auth-app-django==3.1.0
+sqlparse==0.2.4
+dnspython==1.16.0
+requests==2.21.0
+plotly==3.9.0
